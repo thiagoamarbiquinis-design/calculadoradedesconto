@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Calculadora de % de Desconto</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .container {
+        background: #111;
+        padding: 30px;
+        border-radius: 15px;
+        width: 100%;
+        max-width: 420px;
+        box-shadow: 0 0 25px rgba(255,255,255,0.08);
+        text-align: center;
+    }
+
+    img {
+        max-width: 220px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        color: #fff;
+        margin-bottom: 20px;
+        font-weight: 500;
+        letter-spacing: 1px;
+    }
+
+    label {
+        color: #bbb;
+        font-size: 14px;
+        text-align: left;
+        display: block;
+        margin-top: 10px;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-radius: 8px;
+        border: 1px solid #333;
+        background: #1a1a1a;
+        color: #fff;
+        font-size: 15px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    input:focus {
+        border-color: #666;
+        box-shadow: 0 0 8px rgba(255,255,255,0.1);
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 10px;
+        border-radius: 8px;
+        border: none;
+        font-size: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .btn-calcular {
+        background: linear-gradient(45deg, #ffffff, #cccccc);
+        color: #000;
+        font-weight: bold;
+    }
+
+    .btn-calcular:hover {
+        opacity: 0.85;
+    }
+
+    .btn-limpar {
+        background: #8b0000;
+        color: #fff;
+    }
+
+    .btn-limpar:hover {
+        background: #a80000;
+    }
+
+    .resultado {
+        margin-top: 20px;
+        color: #fff;
+        font-weight: 500;
+        line-height: 1.6;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<img src="logo.png" alt="Logo">
+
+<h2>Calculadora de % de Desconto</h2>
+
+<label>Valor dos produtos:</label>
+<input type="number" id="valorProdutos" step="0.01" placeholder="Ex: 547.30">
+
+<label>Valor do frete:</label>
+<input type="number" id="valorFrete" step="0.01" placeholder="Ex: 46.46">
+
+<label>Valor pago (total pago):</label>
+<input type="number" id="valorPago" step="0.01" placeholder="Ex: 380.94">
+
+<button class="btn-calcular" onclick="calcularDesconto()">CALCULAR</button>
+<button class="btn-limpar" onclick="limparCampos()">LIMPAR</button>
+
+<div class="resultado" id="resultado"></div>
+
+</div>
+
+<script>
+function calcularDesconto() {
+    let produtos = parseFloat(document.getElementById("valorProdutos").value);
+    let frete = parseFloat(document.getElementById("valorFrete").value) || 0;
+    let pagoTotal = parseFloat(document.getElementById("valorPago").value);
+
+    if (!produtos || !pagoTotal || produtos <= 0) {
+        document.getElementById("resultado").innerText = "Preencha valores válidos.";
+        return;
+    }
+
+    let total = produtos + frete;
+    let pagoProdutos = pagoTotal - frete;
+
+    let descontoProdutos = ((produtos - pagoProdutos) / produtos) * 100;
+    let descontoTotal = ((total - pagoTotal) / total) * 100;
+    let economizado = total - pagoTotal;
+
+    document.getElementById("resultado").innerHTML =
+        "Desconto sobre produtos: " + descontoProdutos.toFixed(2) + "%<br>" +
+        "Desconto sobre total: " + descontoTotal.toFixed(2) + "%<br>" +
+        "Valor economizado: R$ " + economizado.toFixed(2);
+}
+
+function limparCampos() {
+    document.getElementById("valorProdutos").value = "";
+    document.getElementById("valorFrete").value = "";
+    document.getElementById("valorPago").value = "";
+    document.getElementById("resultado").innerHTML = "";
+}
+</script>
+
+</body>
+</html>
